@@ -1,0 +1,10 @@
+.heading{
+    font-family: cursive;
+    font-size: medium;
+    color: crimson;
+    text-align: center;
+}
+.pic1{
+    width: 200px;
+    border-radius: 1px;
+}

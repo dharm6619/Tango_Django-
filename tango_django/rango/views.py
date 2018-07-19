@@ -1,6 +1,6 @@
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
-
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 
 from .models import Category, page
@@ -37,21 +37,44 @@ def category(request,category_name_url):
         context_dict['category'] = category
     except Category.DoesNotExist:
         pass
-    
+
     return render_to_response('rango/category.html',context_dict,context)
 
+#  def add_category(request):
+#      # Get the context from the request.
+#      # context = RequestContext(request)
+#      # # A HTTP POST?
+#      if request.method == 'POST':
+#          form = CategoryForm(request.POST)
+#          # Have we been provided with a valid form?
+#          if form.is_valid():
+#              form.save(commit=True)
+#              return index(request)
+#          else:
+#              print(form.errors)
+#      else:
+#          form = CategoryForm()
+#          return render_to_response('rango/add_category.html', {'form': form}, context)
+#
+
+@csrf_exempt
 def add_category(request):
+    print(request)
+    print("inside the add_category method")
+    print(request.method)
     # Get the context from the request.
-    # context = RequestContext(request)
+    context = RequestContext(request)
     # # A HTTP POST?
     if request.method == 'POST':
+        print("inside post script method")
+        print(request.POST)
         form = CategoryForm(request.POST)
         # Have we been provided with a valid form?
-        if form.is_valid():
-            form.save(commit=True)
-            return index(request)
-        else:
-            print(form.errors)
+        #  if form.is_valid():
+        #      form.save(commit=True)
+        #      return index(request)
+        #  else:
+        #      print(form.errors)
     else:
         form = CategoryForm()
         return render_to_response('rango/add_category.html', {'form': form}, context)

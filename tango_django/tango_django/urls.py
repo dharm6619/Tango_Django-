@@ -16,12 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
+from rango.views import add_category
+from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('rango',include('rango.urls')),
     path('rango/about',include('rango.urls')),
-    path('rango/add_category/',include('rango.urls')),
+    url(r'^rango/add_category/',add_category),
 ]
 #if settings.DEBUG :
  #   urlpatterns += path('django.views.static',('/media/(?P<path>.*)','serve',{'document_root': settings.MEDIA_ROOT}), )

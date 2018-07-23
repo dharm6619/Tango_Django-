@@ -5,7 +5,8 @@ from django.http import HttpResponse
 
 from .models import Category, page
 
-from .forms import CategoryForm
+from .forms import CategoryForm, pageForm
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -29,7 +30,8 @@ def about(request):
 def category(request,category_name_url):
     context = RequestContext(request)
     category_name = category_name_url.replace('_',' ')
-    context_dict =  {'category_name':category_name}
+    context_dict =  {'category_name':category_name,
+    'category_name_url':category_name_url}
     try:
         category = Category.objects.get(name = category_name)
         Pages = page.objects.filter(category=category)
@@ -40,13 +42,17 @@ def category(request,category_name_url):
     
     return render_to_response('rango/category.html',context_dict,context)
 
+
+@csrf_exempt
 def add_category(request):
-    # Get the context from the request.
-    # context = RequestContext(request)
-    # # A HTTP POST?
+    print(request)
+    print("inside the add_category method")
+    print(request.method)
+    context = RequestContext(request)
     if request.method == 'POST':
+        print("inside post script method")
+        print(request.POST)
         form = CategoryForm(request.POST)
-        # Have we been provided with a valid form?
         if form.is_valid():
             form.save(commit=True)
             return index(request)
@@ -54,6 +60,24 @@ def add_category(request):
             print(form.errors)
     else:
         form = CategoryForm()
-        return render_to_response('rango/add_category.html', {'form': form}, context)
+    return render_to_response('rango/add_category.html', {'form': form}, context)
 
+@csrf_exempt
+def add_page(request,category_name_url):
+    context = RequestContext(request)
+    category_name = category_name_url.replace('_','')
+    if request.method == 'POST':
+        form = PageForm(request.POST)
+        if form.is_valid():
+            page = form.save(commit=False)
+            cat = Category.objects.get(name=category_name)
+            page.category = cat
+            page.views = 0
+            page.save()
+            return category(request, category_name_url)
+        else:
+            print (form.errors)
+    else:
+        form = pageForm()
+    return render_to_response( 'rango/category_name_url/add_page.html',{'category_name_url': category_name_url,'category_name': category_name, 'form': form},context)
 

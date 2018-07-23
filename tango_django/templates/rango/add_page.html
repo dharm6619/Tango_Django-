@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Add a page for a Category
+        </title>
+    </head>
+    <body>
+        <h1>Add a Category</h1>
+        <form id="category_form" method="post" action="/rango/<category_name_url>/add_page/">
+    {% csrf_token %}
+        {{form.as_table}}
+<input type="submit" name="submit" value="Create Category" />
+</form>
+    </body>
+</html>

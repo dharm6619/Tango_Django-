@@ -1,4 +1,4 @@
-"""tango_django URL Configuration
+"""remake_tango URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.0/topics/http/urls/
@@ -15,17 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from django.conf import settings
-from django.conf.urls import url
-from rango.views import add_category,add_page
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('rango',include('rango.urls')),
-    path('rango/about',include('rango.urls')),
-    url(r'^rango/add_category/',add_category),
-    url(r'^rango/category/<category_name_url>/add_page/',add_page),  
+    path('rango/',include('rango.urls')),
+    path('rango/about/',include('rango.urls')),
 ]
-#if settings.DEBUG :
- #   urlpatterns += path('django.views.static',('/media/(?P<path>.*)','serve',{'document_root': settings.MEDIA_ROOT}), )

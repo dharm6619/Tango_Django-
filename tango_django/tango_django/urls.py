@@ -25,7 +25,7 @@ urlpatterns = [
     path('rango',include('rango.urls')),
     path('rango/about',include('rango.urls')),
     url(r'^rango/add_category/',add_category),
-    url(r'^rango/category/<category_name_url>/add_page/',add_page),  
+    url(r'^category/(?P<category_name_url>\w+)/add_page/$', add_page, name='add_page'),
 ]
 #if settings.DEBUG :
  #   urlpatterns += path('django.views.static',('/media/(?P<path>.*)','serve',{'document_root': settings.MEDIA_ROOT}), )

@@ -8,6 +8,6 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('',views.index,name='index'),
-    path('/about',views.about,name="about"),
-    path('/category/<category_name_url>',views.category,name = "category"),
+    path('about',views.about,name="about"),
+    path('category/<category_name_url>',views.category,name = "category"),
 ]

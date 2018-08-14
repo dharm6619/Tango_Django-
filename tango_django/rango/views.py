@@ -31,7 +31,7 @@ def about(request):
     return render_to_response('rango/about.html',dict1,context)
 
 
-
+@csrf_exempt
 def category(request,category_name_url):
     context = RequestContext(request)
     category_name = category_name_url.replace('_',' ')
